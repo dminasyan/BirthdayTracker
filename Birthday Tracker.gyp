@@ -13,9 +13,8 @@ class BirthdayPerson:
 
 class BirthdayTracker:
     
-    def __init__(self, BirthdayPerson):
+    def __init__(self):
         self.birthdays = {}
-        self.addPerson(BirthdayPerson)
 
     def addPerson(self, BirthdayPerson):
         self.birthdays[BirthdayPerson.name] = BirthdayPerson.bday
@@ -27,8 +26,15 @@ class BirthdayTracker:
 
 
 if __name__ == "__main__":
-    name = input("Enter First and Last Name: ")
-    bday = input("Enter " + name + "'s Birthday (MM-DD-YYYY): ")
-    person = BirthdayPerson(name, bday)
-    tracker = BirthdayTracker(person)
+    name = ''
+    tracker = BirthdayTracker()
+    print("You can quit anytime by hitting CRTL-C")
+    try:
+        while True:
+            name = input("Enter First and Last Name: \n")
+            bday = input("Enter " + name + "'s Birthday (MM-DD-YYYY): \n")
+            person = BirthdayPerson(name, bday)
+            tracker.addPerson(person)
+    except KeyboardInterrupt:
+        pass
     print(tracker)
