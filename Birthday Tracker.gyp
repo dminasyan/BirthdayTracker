@@ -41,9 +41,12 @@ if __name__ == "__main__":
         pass
     
     if not os.path.isfile("jsonTracker.json"):
-        jFile = open("jsonTracker.json", "w")
+        with open('jsonTracker.json') as jFile:
+            json.dump(tracker.birthdays, jFile)
     else:
-        jFile = open("jsonTracker.json", "a")
-
-    json.dump(tracker.birthdays, jFile)
-    jFile.close()
+        with open("jsonTracker.json") as jFile:
+            bdayData = json.load(jFile)
+        bdayData.update(tracker.birthdays)
+        with open("jsonTracker.json", "w") as jFile:
+            json.dump(bdayData, jFile)
+    
