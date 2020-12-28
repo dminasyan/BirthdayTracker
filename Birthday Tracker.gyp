@@ -1,4 +1,5 @@
 import datetime as dt
+import json
 
 class BirthdayPerson:
 
@@ -26,8 +27,10 @@ class BirthdayTracker:
 
 
 if __name__ == "__main__":
-    name = ''
+    name = ""
     tracker = BirthdayTracker()
+    jFile = open('jsonTracker.json', 'w')
+
     print("You can quit anytime by hitting CRTL-C")
     try:
         while True:
@@ -37,4 +40,6 @@ if __name__ == "__main__":
             tracker.addPerson(person)
     except KeyboardInterrupt:
         pass
-    print(tracker)
+    
+    json.dump(tracker.birthdays, jFile)
+    jFile.close()
