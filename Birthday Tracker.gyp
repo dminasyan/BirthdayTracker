@@ -1,5 +1,6 @@
 import datetime as dt
 import json
+import os
 
 class BirthdayPerson:
 
@@ -29,8 +30,6 @@ class BirthdayTracker:
 if __name__ == "__main__":
     name = ""
     tracker = BirthdayTracker()
-    jFile = open('jsonTracker.json', 'w')
-
     print("You can quit anytime by hitting CRTL-C")
     try:
         while True:
@@ -41,5 +40,10 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         pass
     
+    if not os.path.isfile("jsonTracker.json"):
+        jFile = open("jsonTracker.json", "w")
+    else:
+        jFile = open("jsonTracker.json", "a")
+
     json.dump(tracker.birthdays, jFile)
     jFile.close()
