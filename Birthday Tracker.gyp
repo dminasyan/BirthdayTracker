@@ -1,5 +1,4 @@
 import datetime as dt
-import json
 import os
 import sqlite3
 
@@ -51,14 +50,4 @@ if __name__ == "__main__":
     t.execute("INSERT INTO bdays VALUES (?,?)", (name, bday))
     trackdb.commit()
     trackdb.close()
-    
-    # if not os.path.isfile("jsonTracker.json"):
-    #     with open('jsonTracker.json') as jFile:
-    #         json.dump(tracker.birthdays, jFile)
-    # else:
-    #     with open("jsonTracker.json") as jFile:
-    #         bdayData = json.load(jFile)
-    #     bdayData.update(tracker.birthdays)
-    #     with open("jsonTracker.json", "w") as jFile:
-    #         json.dump(bdayData, jFile)
     
