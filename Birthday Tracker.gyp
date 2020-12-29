@@ -32,15 +32,15 @@ import sqlite3
 
 if __name__ == "__main__":
 
-    if not os.path.isfile("jsonTracker.db"):
-        trackdb = sqlite3.connect("jsonTracker.db")
+    if not os.path.isfile("bdayTracker.db"):
+        trackdb = sqlite3.connect("bdayTracker.db")
         t = trackdb.cursor()
         t.execute("CREATE TABLE bdays (Name, BirthDate)")
 
     print("You can quit anytime by hitting CRTL-C")
     try:
         while True:
-            trackdb = sqlite3.connect("jsonTracker.db")
+            trackdb = sqlite3.connect("bdayTracker.db")
             t = trackdb.cursor()
 
             option = input("Adding or Retrieving ('A' or 'R')? \n")
@@ -53,11 +53,13 @@ if __name__ == "__main__":
 
                 #adding person to Database
                 t.execute("INSERT INTO bdays VALUES (?,?)", (name, bday))
+                trackdb.commit()
 
 
             elif option.upper() == 'R':
                 name = input("Whose birthday would you like to know? \n")
                 t.execute("SELECT BirthDate FROM bdays WHERE Name=?", (name,))
+                trackdb.commit()
                 retrievedBday = t.fetchall()
                 print(retrievedBday)
 
@@ -67,6 +69,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         pass
 
-    trackdb.commit()
+    
     trackdb.close()
     
