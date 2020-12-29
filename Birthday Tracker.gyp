@@ -1,6 +1,7 @@
 import datetime as dt
 import json
 import os
+import sqlite3
 
 class BirthdayPerson:
 
@@ -39,14 +40,25 @@ if __name__ == "__main__":
             tracker.addPerson(person)
     except KeyboardInterrupt:
         pass
+
+    if not os.path.isfile("jsonTracker.db"):
+        trackdb = sqlite3.connect("jsonTracker.db")
+        t = trackdb.cursor()
+        t.execute("CREATE TABLE bdays (Name, BirthDate)")
+        
+    trackdb = sqlite3.connect("jsonTracker.db")
+    t = trackdb.cursor()
+    t.execute("INSERT INTO bdays VALUES (?,?)", (name, bday))
+    trackdb.commit()
+    trackdb.close()
     
-    if not os.path.isfile("jsonTracker.json"):
-        with open('jsonTracker.json') as jFile:
-            json.dump(tracker.birthdays, jFile)
-    else:
-        with open("jsonTracker.json") as jFile:
-            bdayData = json.load(jFile)
-        bdayData.update(tracker.birthdays)
-        with open("jsonTracker.json", "w") as jFile:
-            json.dump(bdayData, jFile)
+    # if not os.path.isfile("jsonTracker.json"):
+    #     with open('jsonTracker.json') as jFile:
+    #         json.dump(tracker.birthdays, jFile)
+    # else:
+    #     with open("jsonTracker.json") as jFile:
+    #         bdayData = json.load(jFile)
+    #     bdayData.update(tracker.birthdays)
+    #     with open("jsonTracker.json", "w") as jFile:
+    #         json.dump(bdayData, jFile)
     
